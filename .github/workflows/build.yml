@@ -30,6 +30,6 @@ jobs:
       - name: Compile Vim
         shell: cmd
         run: |
-          cd v8.2.2445
+          cd vim-8.2.2445
           "%VCVARSALL%" amd64_arm64
           nmake -f Make_mvc.mak GUI=yes IME=yes MBYTE=yes ICONV=yes DEBUG=no
