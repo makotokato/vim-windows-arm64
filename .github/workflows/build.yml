@@ -31,5 +31,5 @@ jobs:
         shell: cmd
         run: |
           cd vim-8.2.2445/src
-          call "%VCVARSALL%" amd64_arm64
+          call "%ProgramFiles(x86)%\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build\vcvarsall.bat" amd64_arm64
           nmake -f Make_mvc.mak GUI=yes IME=yes MBYTE=yes ICONV=yes DEBUG=no
