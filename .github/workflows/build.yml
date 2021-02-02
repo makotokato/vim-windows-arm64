@@ -33,3 +33,13 @@ jobs:
           cd vim-8.2.2445/src
           call "%ProgramFiles(x86)%\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build\vcvarsall.bat" amd64_arm64
           nmake -f Make_mvc.mak GUI=yes IME=yes MBYTE=yes ICONV=yes DEBUG=no
+      - name: Create zip file
+        run: |
+          mkdir vim82
+          xcopy vim-8.2.2445\src\*.exe vim82
+          xcopy vim-8.2.2445\tee\*.exe vim82
+          xcopy vim-8.2.2445\xxd\*.exe vim82
+          xcopy vim-8.2.2445\GvimExt\*.dll vim82
+          xcopy vim-8.2.2445/VisVim\*.dll vim82
+          xcopy /E /I vim-8.2.2445\runtime vim82
+          powershell Compress-Archive -Path vim82 -DestinationPath vim-8.2.2445.zip
