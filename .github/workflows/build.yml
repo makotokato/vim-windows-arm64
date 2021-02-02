@@ -40,6 +40,28 @@ jobs:
           xcopy vim-8.2.2445\tee\*.exe vim82
           xcopy vim-8.2.2445\xxd\*.exe vim82
           xcopy vim-8.2.2445\GvimExt\*.dll vim82
-          xcopy vim-8.2.2445/VisVim\*.dll vim82
+          xcopy vim-8.2.2445\VisVim\*.dll vim82
           xcopy /E /I vim-8.2.2445\runtime vim82
           powershell Compress-Archive -Path vim82 -DestinationPath vim-8.2.2445.zip
+          
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: Release ${{ github.ref }}
+          draft: true
+          prerelease: true
+
+      - name: Upload Release Asset
+        id: upload-release-asset 
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./vim-8.2.2445.zip
+          asset_name: vim-8.2.2445.zip
+          asset_content_type: application/zip
