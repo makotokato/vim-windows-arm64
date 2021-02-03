@@ -24,25 +24,25 @@ jobs:
     steps:
       - name: Download Vim source
         run: |
-          curl -O -L -s https://github.com/vim/vim/archive/v8.2.2445.zip
-          powershell Expand-Archive -Path .\v8.2.2445.zip -DestinationPath .
+          curl -O -L -s https://github.com/vim/vim/archive/v8.2.2453.zip
+          powershell Expand-Archive -Path .\v8.2.2453.zip -DestinationPath .
           
       - name: Compile Vim
         shell: cmd
         run: |
-          cd vim-8.2.2445/src
+          cd vim-8.2.2453/src
           call "%ProgramFiles(x86)%\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build\vcvarsall.bat" amd64_arm64
-          nmake -f Make_mvc.mak GUI=yes IME=yes MBYTE=yes ICONV=yes DEBUG=no
+          nmake -f Make_mvc.mak IME=yes MBYTE=yes ICONV=yes DEBUG=no
       - name: Create zip file
         run: |
           mkdir vim82
-          xcopy vim-8.2.2445\src\*.exe vim82
-          xcopy vim-8.2.2445\tee\*.exe vim82
-          xcopy vim-8.2.2445\xxd\*.exe vim82
-          xcopy vim-8.2.2445\GvimExt\*.dll vim82
-          xcopy vim-8.2.2445\VisVim\*.dll vim82
-          xcopy /E /I vim-8.2.2445\runtime vim82
-          powershell Compress-Archive -Path vim82 -DestinationPath vim-8.2.2445.zip
+          xcopy vim-8.2.2453\src\*.exe vim82
+          xcopy vim-8.2.2453\tee\*.exe vim82
+          xcopy vim-8.2.2453\xxd\*.exe vim82
+          xcopy vim-8.2.2453\GvimExt\*.dll vim82
+          xcopy vim-8.2.2453\VisVim\*.dll vim82
+          xcopy /E /I vim-8.2.2453\runtime vim82
+          powershell Compress-Archive -Path vim82 -DestinationPath vim-8.2.2453.zip
           
       - name: Create Release
         id: create_release
@@ -62,6 +62,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./vim-8.2.2445.zip
-          asset_name: vim-8.2.2445.zip
+          asset_path: ./vim-8.2.2453.zip
+          asset_name: vim-8.2.2453.zip
           asset_content_type: application/zip
